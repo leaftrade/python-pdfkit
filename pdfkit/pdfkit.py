@@ -136,7 +136,10 @@ class PDFKit(object):
         # Sometimes wkhtmltopdf will exit with non-zero
         # even if it finishes generation.
         # If will display 'Done' in the second last line
-        if stderr.splitlines()[-2].strip() == 'Done':
+        try:
+            if stderr.splitlines()[-2].strip() == 'Done':
+                return
+        except IndexError:
             return
 
         if 'cannot connect to X server' in stderr:
